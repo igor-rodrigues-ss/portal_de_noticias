@@ -9,7 +9,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - /home/igor/spin/portal_noticias/docker/db_data:/data/db
+      - /home/igor/Documents/db_data:/data/db
     networks:
       - backend
 

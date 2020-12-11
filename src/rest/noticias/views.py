@@ -5,6 +5,7 @@ from flask_restx import api, Resource, Namespace
 from src.api.apps.noticias.domain.services import NoticiasService
 from flask_restx import fields
 
+
 api = Namespace('Noticias')
 
 
@@ -22,15 +23,27 @@ post_schema = api.model(
 )
 
 
+update_schema = api.model(
+    "Atualização de Notícis",
+    {
+        "titulo": fields.String(description="Título da notícia"),
+        "texto": fields.String(description="Texto da notícia"),
+        "autor": fields.Nested(
+            api.model('Autor Update', {
+                'nome': fields.String(description="Nome do Autor"), 
+            })
+        )
+    }
+)
+
+
 class NoticiasGetPostView(Resource):
 
     @api.doc(params={
-        'titulo': {'description': 'Título da Notícia'},
-        'texto': {'description': 'Conteúdo da Notícia'},
-        'nome_do_autor': {'description': 'Nome do Autor'}
+        'val': {'description': 'Valor para pesquisa da notícia'},
     })
     def get(self) -> dict:
-        return NoticiasService().search_by()
+        return NoticiasService().search_by(request.args.get("val", None))
 
     @api.expect(post_schema)
     def post(self):
@@ -41,8 +54,12 @@ class NoticiasGetPostView(Resource):
 
 class NoticiasPutDeleteView(Resource):
 
-    def put(self, noticia_id: int):
-        return {'put': noticia_id}
+    @api.expect(update_schema)
+    def put(self, noticia_id: str):
+        data = request.get_json()
+        data['oid'] = noticia_id
+        return NoticiasService().update(data)
 
-    def delete(self, noticia_id: int):
-        return {'delete': noticia_id}
+    def delete(self, noticia_id: str):
+        NoticiasService().delete(noticia_id)
+        return {}, 200

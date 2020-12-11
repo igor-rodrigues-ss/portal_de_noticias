@@ -11,9 +11,12 @@ Flask = "^1.1.2"
 flask-restx = "^0.2.0"
 mongoengine = "^0.21.0"
 marshmallow = "^3.9.1"
+pydantic = "^1.7.3"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.790"
+pytest = "^6.1.2"
+pytest-flask = "^1.1.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

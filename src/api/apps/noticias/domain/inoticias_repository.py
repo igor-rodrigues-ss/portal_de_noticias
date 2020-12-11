@@ -8,17 +8,17 @@ from src.api.apps.noticias.domain.noticia import Noticia
 class INoticiasRepository(ABC):
 
     @abstractclassmethod
-    def create(self, noticia: Noticia):
+    def create(self, noticia: Noticia) -> dict:
         pass
 
     @abstractclassmethod
-    def update(self, noticia: Noticia):
+    def update(self, noticia: Noticia) -> dict:
         pass
 
     @abstractclassmethod
-    def delete(self, noticia: Noticia):
+    def delete(self, noticia_id: str):
         pass
 
     @abstractclassmethod
-    def search_by(self) -> List[dict]:
+    def search_by(self, value: str) -> List:
         pass

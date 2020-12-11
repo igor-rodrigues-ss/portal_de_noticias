@@ -8,5 +8,9 @@ from src.rest.noticias.views import (
 
 # api = Namespace('Noticias')
 
-api.add_resource(NoticiasGetPostView, '/')
-api.add_resource(NoticiasPutDeleteView, '/<int:noticia_id>')
+api.add_resource(
+	NoticiasGetPostView, '/', endpoint='noticias_get_post'
+)
+api.add_resource(
+	NoticiasPutDeleteView, '/<string:noticia_id>' , endpoint='noticias_put_delete'
+)

@@ -1,15 +1,15 @@
 #!-*-coding:utf-8-*-
 
-from dataclasses import dataclass
+from pydantic import BaseModel
 
 
-@dataclass(frozen=True)
-class Autor:
+class Autor(BaseModel):
     nome: str
+    oid: str = None
 
 
-@dataclass(frozen=True)
-class Noticia:
+class Noticia(BaseModel):
     titulo: str
     texto: str
     autor: Autor
+    oid: str = None

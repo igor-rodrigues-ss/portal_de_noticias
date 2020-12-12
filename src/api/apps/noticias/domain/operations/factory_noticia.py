@@ -3,6 +3,7 @@
 from src.api.apps.noticias.domain.entities.autor import Autor
 from src.api.apps.noticias.domain.entities.noticia import Noticia
 
+
 class FactoryNoticia:
 
     _data: dict

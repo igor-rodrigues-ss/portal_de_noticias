@@ -11,11 +11,14 @@ load_dotenv(
     )
 )
 
+import logging
 from flask import Flask
 from flask_restx import Api
 from src.rest.noticias.routes import api as noticias_api
 from flask_mongoengine import MongoEngine
-from src.config import DB_NAME, DB_HOST, DB_USERNAME, DB_PASSWORD, DB_PORT, DB_AUTH_SOURCE
+from src.config import (
+    DB_NAME, DB_HOST, DB_USERNAME, DB_PASSWORD, DB_PORT, DB_AUTH_SOURCE
+)
 
 
 def config_app():
@@ -31,6 +34,7 @@ def config_app():
         'password': DB_PASSWORD,
         'authentication_source': DB_AUTH_SOURCE
     }
+    app.logger.setLevel(logging.INFO)
     MongoEngine(app)
     return app
 

@@ -1,8 +1,11 @@
+#!-*-coding:utf-8-*-
+
 from flask_restx import Namespace
 from flask_restx import fields
 
 
 api = Namespace('Noticias')
+
 
 post_schema = api.model(
     "Criação de Notícias",

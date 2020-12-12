@@ -1,6 +1,6 @@
 #!-*-coding:utf-8-*-
 
-from mongoengine import *
+from mongoengine import StringField, ReferenceField, CASCADE, Document
 
 
 class Autor(Document):

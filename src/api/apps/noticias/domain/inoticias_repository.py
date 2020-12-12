@@ -2,7 +2,7 @@
 
 from typing import List
 from abc import ABC, abstractclassmethod
-from src.api.apps.noticias.domain.noticia import Noticia
+from src.api.apps.noticias.domain.entities.noticia import Noticia
 
 
 class INoticiasRepository(ABC):
@@ -20,5 +20,5 @@ class INoticiasRepository(ABC):
         pass
 
     @abstractclassmethod
-    def search_by(self, value: str) -> List:
+    def search_by(self, value: str) -> List[dict]:
         pass

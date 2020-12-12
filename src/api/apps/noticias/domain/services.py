@@ -7,7 +7,10 @@ from src.api.apps.noticias.adapters.db.noticias_repository import (
     NoticiasRepository
 )
 from typing import List
-from src.api.apps.noticias.domain.noticia import Noticia, Autor
+from src.api.apps.noticias.domain.operations.validation import Validation
+from src.api.apps.noticias.domain.operations.factory_noticia import (
+    FactoryNoticia
+)
 
 
 class NoticiasService:
@@ -22,23 +25,14 @@ class NoticiasService:
     def search_by(self, value: str) -> List[dict]:
         return self._noticias_repo.search_by(value)
 
-    def create(self, data: dict) -> dict:
-        autor = Autor(nome=data['autor']['nome'])
-        noticia = Noticia(
-            titulo=data['titulo'], texto=data['texto'], autor=autor
-        )
+    def create(self, data: str) -> dict:
+        noticia = FactoryNoticia(data).with_required_fields()
+        Validation(noticia).validate()
         return self._noticias_repo.create(noticia)
 
     def update(self, data: dict):
-        autor_json = data.get('autor', None)
-        autor_nome = autor_json.get('nome', None) if isinstance(autor_json, dict) else None
-        autor = Autor(nome=autor_nome)
-        noticia = Noticia(
-            oid=data['oid'],
-            titulo=data.get('titulo', None),
-            texto=data.get('texto', None),
-            autor=autor
-        )
+        noticia = FactoryNoticia(data).with_optional_fields()
+        Validation(noticia).validate()
         return self._noticias_repo.update(noticia)
 
     def delete(self, noticia_id: str):

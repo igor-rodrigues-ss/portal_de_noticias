@@ -1,0 +1,1 @@
+STR_NOT_SHOULD_HAS_INT_VALUE = 'string_not_should_has_int_value'

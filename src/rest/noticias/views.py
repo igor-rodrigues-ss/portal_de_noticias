@@ -1,40 +1,9 @@
 #!-*-coding:utf-8-*-
 
 from flask import request
-from flask_restx import api, Resource, Namespace
+from flask_restx import Resource
 from src.api.apps.noticias.domain.services import NoticiasService
-from flask_restx import fields
-
-
-api = Namespace('Noticias')
-
-
-post_schema = api.model(
-    "Criação de Notícias", 
-    {
-        "titulo": fields.String(description="Título da notícia", required=True),
-        "texto": fields.String(description="Texto da notícia", required=True),
-        "autor": fields.Nested(
-            api.model('Autor', {
-                'nome': fields.String(description="Nome do Autor", required=True), 
-            })
-        )
-    }
-)
-
-
-update_schema = api.model(
-    "Atualização de Notícis",
-    {
-        "titulo": fields.String(description="Título da notícia"),
-        "texto": fields.String(description="Texto da notícia"),
-        "autor": fields.Nested(
-            api.model('Autor Update', {
-                'nome': fields.String(description="Nome do Autor"), 
-            })
-        )
-    }
-)
+from src.rest.noticias.conf import api, post_schema, update_schema
 
 
 class NoticiasGetPostView(Resource):

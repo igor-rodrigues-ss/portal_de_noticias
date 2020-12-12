@@ -1,9 +1,10 @@
 #!-*-coding:utf-8-*-
 
 import json
-from app import app
+from src.app import app
 from flask import url_for
 from src.api.apps.noticias.adapters.db.models import Noticias as NoticiasModel
+from src.api.errors.codes import STR_NOT_SHOULD_HAS_INT_VALUE
 
 
 class TestCreate:
@@ -32,6 +33,22 @@ class TestCreate:
         assert resp_data['titulo'] == self.data['titulo']
         assert resp_data['texto'] == self.data['texto']
         assert resp_data['autor']['nome'] == self.data['autor']['nome']
+
+    def test_fail_post_autor_number(self):
+        data = {
+            "titulo": "teste",
+            "texto": "teste teste",
+            "autor": {
+                "nome": "teste 123"
+            }
+        }
+        with app.test_request_context():
+            url = url_for('noticias_get_post')
+            resp = self.client.post(
+                url, data=json.dumps(data), headers=self.default_headers
+            )
+        assert resp.status_code == 400
+        assert resp.get_json()['code'] == STR_NOT_SHOULD_HAS_INT_VALUE
 
     def teardown_class(cls):
         for data in cls.created_data:

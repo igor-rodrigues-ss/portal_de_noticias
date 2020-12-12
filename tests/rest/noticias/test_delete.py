@@ -1,8 +1,10 @@
 #!-*-coding:utf-8-*-
 
-from app import app
+from src.app import app
 from flask import url_for
-from src.api.apps.noticias.adapters.db.models import Noticias as NoticiasModel, Autor as AutorModel
+from src.api.apps.noticias.adapters.db.models import (
+    Noticias as NoticiasModel, Autor as AutorModel
+)
 
 
 class TestDelete:

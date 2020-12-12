@@ -19,10 +19,12 @@ from flask_mongoengine import MongoEngine
 from src.config import (
     DB_NAME, DB_HOST, DB_USERNAME, DB_PASSWORD, DB_PORT, DB_AUTH_SOURCE
 )
+from flask_cors import CORS
 
 
 def config_app():
     app = Flask(__name__)
+    CORS(app)
     api = Api(app)
     api.add_namespace(noticias_api, path='/noticias')
 

@@ -25,6 +25,14 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: m0ng0#123
     networks:
       - backend
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    ports:
+      - 5000:5000
+    networks:
+      - backend
 
 networks: 
     backend:

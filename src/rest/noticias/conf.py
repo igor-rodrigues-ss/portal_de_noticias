@@ -22,7 +22,7 @@ post_schema = api.model(
 
 
 update_schema = api.model(
-    "Atualização de Notícis",
+    "Atualização de Notícias",
     {
         "titulo": fields.String(description="Título da notícia"),
         "texto": fields.String(description="Texto da notícia"),

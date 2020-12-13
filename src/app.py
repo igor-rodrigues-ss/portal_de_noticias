@@ -14,7 +14,6 @@ load_dotenv(
 import logging
 from flask import Flask
 from flask_restx import Api
-from src.rest.noticias.routes import api as noticias_api
 from flask_mongoengine import MongoEngine
 from src.config import (
     DB_NAME, DB_HOST, DB_USERNAME, DB_PASSWORD, DB_PORT, DB_AUTH_SOURCE
@@ -25,8 +24,6 @@ from flask_cors import CORS
 def config_app():
     app = Flask(__name__)
     CORS(app)
-    api = Api(app)
-    api.add_namespace(noticias_api, path='/noticias')
 
     app.config['MONGODB_SETTINGS'] = {
         'db': DB_NAME,
@@ -34,10 +31,16 @@ def config_app():
         'port': DB_PORT,
         'username': DB_USERNAME,
         'password': DB_PASSWORD,
-        'authentication_source': DB_AUTH_SOURCE
+        'authentication_source': DB_AUTH_SOURCE,
+        'alias':'default'
     }
     app.logger.setLevel(logging.INFO)
     MongoEngine(app)
+
+    from src.rest.noticias.routes import api as noticias_api
+    api = Api(app)
+    api.add_namespace(noticias_api, path='/noticias')
+    
     return app
 
 

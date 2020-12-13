@@ -3,7 +3,7 @@
 import json
 from src.app import app
 from flask import url_for
-from src.api.apps.noticias.adapters.db.models import Noticias as NoticiasModel
+from src.api.apps.noticias.adapters.db.models import NoticiaModel
 from src.api.errors.codes import STR_NOT_SHOULD_HAS_INT_VALUE
 
 
@@ -52,5 +52,5 @@ class TestCreate:
 
     def teardown_class(cls):
         for data in cls.created_data:
-            noticia = NoticiasModel.objects.get(id=data['oid'])
+            noticia = NoticiaModel.objects.get(id=data['id'])
             noticia.delete()

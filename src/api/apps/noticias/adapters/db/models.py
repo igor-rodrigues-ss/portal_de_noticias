@@ -3,21 +3,35 @@
 from mongoengine import StringField, ReferenceField, CASCADE, Document
 
 
-class Autor(Document):
+class AutorModel(Document):
     nome = StringField(max_length=512)
+    meta = {
+        'collection': 'autor',
+        'indexes': [{
+            'fields': ['$nome'],
+            'weights': {'nome': 3}
+        }]
+    }
 
 
-class Noticias(Document):
+class NoticiaModel(Document):
     titulo = StringField(max_length=512, required=True)
     texto = StringField(required=True)
     autor = ReferenceField(
-        Autor, reverse_delete_rule=CASCADE, required=True
-        # TODO: validar a exclusão em cascata
+        AutorModel, reverse_delete_rule=CASCADE, required=True
     )
+    meta = {
+        'collection': 'noticia',
+        'indexes': [{
+            'fields': ['$titulo', '$texto'],
+            # 'default_language': 'english',
+            'weights': {'titulo': 10, 'texto': 2}
+        }]
+    }
 
     def to_dict(self) -> dict:
         return {
-            'oid': str(self.id),
+            'id': str(self.id),
             'titulo': self.titulo,
             'texto': self.texto,
             'autor': {

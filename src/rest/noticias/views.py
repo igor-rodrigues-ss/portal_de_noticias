@@ -26,7 +26,7 @@ class NoticiasPutDeleteView(Resource):
     @api.expect(update_schema)
     def put(self, noticia_id: str):
         data = request.get_json()
-        data['oid'] = noticia_id
+        data['id'] = noticia_id
         return NoticiasService().update(data)
 
     def delete(self, noticia_id: str):

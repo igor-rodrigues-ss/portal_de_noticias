@@ -11,9 +11,9 @@ class FactoryNoticia:
     def __init__(self, data: dict):
         self._data = data
 
-    def with_optional_fields(self) -> Noticia:
+    def to_update(self) -> Noticia:
         """
-        - um noticia com campos opcionais e usado para atualizacao de
+        - cria uma noticia com campos opcionais e usado para atualizacao de
           uma noticia em banco
         """
         autor_json = self._data.get('autor', None)
@@ -25,16 +25,16 @@ class FactoryNoticia:
 
         autor = Autor(nome=autor_nome)
         noticia = Noticia(
-            oid=self._data['oid'],
+            oid=self._data['id'],
             titulo=self._data.get('titulo', None),
             texto=self._data.get('texto', None),
             autor=autor
         )
         return noticia
 
-    def with_required_fields(self) -> Noticia:
+    def to_create(self) -> Noticia:
         """
-        - um noticia com campos opcionais e usado para criacao de
+        - cria uma noticia com campos opcionais e usado para criacao de
           uma noticia em banco
         """
         autor = Autor(nome=self._data['autor']['nome'])

@@ -2,12 +2,20 @@
 
 from src.app import app
 from flask import url_for
-from src.api.apps.noticias.adapters.db.models import (
-    Noticias as NoticiasModel, Autor as AutorModel
-)
+from src.api.apps.noticias.adapters.db.models import NoticiaModel, AutorModel
 
 
 class TestSearch:
+
+    @classmethod
+    def _save_data(cls, data: dict):
+        autor = AutorModel(nome=data['autor']['nome'])
+        autor.save()
+        noticia = NoticiaModel(
+            titulo=data['titulo'], texto=data['texto'], autor=autor
+        )
+        noticia.save()
+        return str(noticia.id)
 
     def setup_class(cls):
         cls.client = app.test_client()
@@ -19,13 +27,15 @@ class TestSearch:
                 'nome': 'autor search'
             }
         }
-        autor = AutorModel(nome=cls.data['autor']['nome'])
-        autor.save()
-        noticia = NoticiasModel(
-            titulo=cls.data['titulo'], texto=cls.data['texto'], autor=autor
-        )
-        noticia.save()
-        cls.data['oid'] = str(noticia.id)
+        cls.data2 = {
+            'titulo': 'abc',
+            'texto': 'abc',
+            'autor': {
+                'nome': 'abc'
+            }
+        }
+        cls.data['oid'] = cls._save_data(cls.data)
+        cls.data2['oid'] = cls._save_data(cls.data2)
 
     def test_get(self):
         val_to_test = 'teste search'
@@ -41,5 +51,7 @@ class TestSearch:
         assert resp_data[0]['autor']['nome'] == self.data['autor']['nome']
 
     def teardown_class(cls):
-        noticia = NoticiasModel.objects.get(id=cls.data['oid'])
-        noticia.delete()
+        noticias = NoticiaModel.objects.filter(
+            id__in=[cls.data2['oid'], cls.data['oid']]
+        )
+        noticias.delete()

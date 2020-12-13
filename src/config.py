@@ -10,3 +10,5 @@ DB_USERNAME = os.environ.get('DB_USERNAME', '')
 DB_PASSWORD = os.environ.get('DB_PASSWORD', '')
 DB_AUTH_SOURCE = os.environ.get('DB_AUTH_SOURCE', '')
 FLASK_LOGGER_NAME = 'src.app'
+
+NoneType = type(None)

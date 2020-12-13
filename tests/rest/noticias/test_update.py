@@ -3,9 +3,7 @@
 import json
 from src.app import app
 from flask import url_for
-from src.api.apps.noticias.adapters.db.models import (
-    Noticias as NoticiasModel, Autor as AutorModel
-)
+from src.api.apps.noticias.adapters.db.models import NoticiaModel, AutorModel
 
 
 class TestUpdate:
@@ -15,7 +13,7 @@ class TestUpdate:
         cls.default_headers = {'Content-Type': 'application/json'}
         autor = AutorModel(nome='teste')
         autor.save()
-        noticia = NoticiasModel(
+        noticia = NoticiaModel(
             titulo='teste 1', texto='teste teste 1', autor=autor
         )
         noticia.save()
@@ -45,5 +43,5 @@ class TestUpdate:
 
     def teardown_class(cls):
         for data in cls.created_data:
-            noticia = NoticiasModel.objects.get(id=data['oid'])
+            noticia = NoticiaModel.objects.get(id=data['id'])
             noticia.delete()

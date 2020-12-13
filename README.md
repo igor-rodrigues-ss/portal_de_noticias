@@ -11,20 +11,25 @@
 
 
 ### Ambiente de desenvolvimento
-- Preparando o ambiente
+- Preparando o ambiente.
 ```sh
 cd portal_de_noticias
 mkvirtualenv portal_de_noticias -p python3.9
 poetry install --dev
 ```
-- Crie um novo container do docker com mongodb
-- Configure as crendenciais de acesso no arquivo: config.env
+- Crie um novo container do docker com mongodb.
+- Configure as crendenciais de acesso no arquivo: config.env.
 ```sh
-vim config.env
+vim portal_de_noticias/config.env
 ```
-- Executando a aplicação em desenvolvimento
+- Executando a aplicação em desenvolvimento:
 ```sh
 python dev.py
+# acesse: http://localhost:5000
+```
+- Executando testes:
+```sh
+pytest -v
 ```
 
 ### Deploy
@@ -36,6 +41,7 @@ vim portal_de_noticias/config.env
 ```sh
 cd portal_de_noticias/deploy
 ./deploy.sh
+# acesse: http://localhost:5000
 ```
 - Após a execução do *deploy.sh* será instanciado um container da aplicação (api) e da base de dados (mongo) configurados por meio do arquivo **portal_de_noticias/config.env**.
 

@@ -2,9 +2,7 @@
 
 from src.app import app
 from flask import url_for
-from src.api.apps.noticias.adapters.db.models import (
-    Noticias as NoticiasModel, Autor as AutorModel
-)
+from src.api.apps.noticias.adapters.db.models import NoticiaModel, AutorModel
 
 
 class TestDelete:
@@ -14,7 +12,7 @@ class TestDelete:
         cls.default_headers = {'Content-Type': 'application/json'}
         autor = AutorModel(nome='teste')
         autor.save()
-        noticia = NoticiasModel(
+        noticia = NoticiaModel(
             titulo='teste 1', texto='teste teste 1', autor=autor
         )
         noticia.save()
@@ -28,5 +26,5 @@ class TestDelete:
             )
         assert resp.status_code == 200
         assert len(
-            NoticiasModel.objects(id=self.noticia_id)
+            NoticiaModel.objects(id=self.noticia_id)
         ) == 0

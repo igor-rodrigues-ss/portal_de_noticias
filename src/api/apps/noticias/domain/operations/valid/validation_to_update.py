@@ -14,4 +14,4 @@ class ValidationToUpdate(IValidation):
 
     def validate(self):
         self._field_is_required(self._data, 'id')
-        self._autor_nome_should_be_str(self._data)
+        self._validate_autor_nome(self._data)

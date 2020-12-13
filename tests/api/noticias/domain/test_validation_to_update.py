@@ -5,7 +5,7 @@ from src.api.apps.noticias.domain.operations.valid.validation_to_update import (
     ValidationToUpdate
 )
 from src.api.errors.exceptions import (
-    StrNotShouldHasIntValues, FieldIsRequired
+    FieldNotShouldHasNumbers, FieldIsRequired
 )
 
 
@@ -21,7 +21,7 @@ class TestValidationToUpdate:
             }
 
         }
-        with pytest.raises(StrNotShouldHasIntValues):
+        with pytest.raises(FieldNotShouldHasNumbers):
             ValidationToUpdate(data).validate()
 
     def test_validate_fail_without_id(self):

@@ -4,7 +4,9 @@ import json
 from src.app import app
 from flask import url_for
 from src.api.apps.noticias.adapters.db.models import NoticiaModel
-from src.api.errors.codes import STR_NOT_SHOULD_HAS_INT_VALUE
+from src.api.errors.codes import (
+    FIELD_NOT_SHOULD_HAS_INT_VALUE, INVALID_STRUCTURE
+)
 
 
 class TestCreate:
@@ -48,7 +50,22 @@ class TestCreate:
                 url, data=json.dumps(data), headers=self.default_headers
             )
         assert resp.status_code == 400
-        assert resp.get_json()['code'] == STR_NOT_SHOULD_HAS_INT_VALUE
+        assert resp.get_json()['code'] == FIELD_NOT_SHOULD_HAS_INT_VALUE
+
+    def test_post_invalid_struct(self):
+        data = {
+            "titulo1": "teste",
+            "autor": {
+                "nome": "teste 123"
+            }
+        }
+        with app.test_request_context():
+            url = url_for('noticias_get_post')
+            resp = self.client.post(
+                url, data=json.dumps(data), headers=self.default_headers
+            )
+        assert resp.status_code == 400
+        assert resp.get_json()['code'] == INVALID_STRUCTURE
 
     def teardown_class(cls):
         for data in cls.created_data:

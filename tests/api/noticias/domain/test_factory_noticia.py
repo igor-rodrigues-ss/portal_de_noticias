@@ -33,21 +33,3 @@ class TestFactoryNoticia:
         assert noticia.titulo is None
         assert noticia.texto is None
         assert noticia.autor.nome == data['autor']['nome']
-
-
-    # def test_validate_success(self):
-    #     data = {
-    #         'titulo': 'ABC',
-    #         'texto': 'Teste teste teste',
-    #         'autor': {
-    #             'nome': 'Teste'
-    #         }
-
-    #     }
-    #     noticia = FactoryNoticia(data).with_required_fields()
-    #     try:
-    #         Validation(noticia).validate()
-    #     except Exception as exc:
-    #         raise pytest.fail(
-    #             f"Validação falhou com dados corretos.\n{str(exc)}"
-    #         )

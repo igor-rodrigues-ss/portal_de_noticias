@@ -32,7 +32,7 @@ def config_app():
         'username': DB_USERNAME,
         'password': DB_PASSWORD,
         'authentication_source': DB_AUTH_SOURCE,
-        'alias':'default'
+        'alias': 'default'
     }
     app.logger.setLevel(logging.INFO)
     MongoEngine(app)
@@ -40,7 +40,7 @@ def config_app():
     from src.rest.noticias.routes import api as noticias_api
     api = Api(app)
     api.add_namespace(noticias_api, path='/noticias')
-    
+
     return app
 
 

@@ -4,7 +4,7 @@ import pytest
 from src.api.apps.noticias.domain.operations.valid.validation_to_create import (
     ValidationToCreate
 )
-from src.api.errors.exceptions import StrNotShouldHasIntValues
+from src.api.errors.exceptions import FieldNotShouldHasNumbers
 
 
 class TestValidationToCreate:
@@ -18,7 +18,7 @@ class TestValidationToCreate:
             }
 
         }
-        with pytest.raises(StrNotShouldHasIntValues):
+        with pytest.raises(FieldNotShouldHasNumbers):
             ValidationToCreate(data).validate()
 
     def test_validate_success(self):

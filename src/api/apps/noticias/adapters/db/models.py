@@ -1,33 +1,18 @@
 #!-*-coding:utf-8-*-
 
-from mongoengine import StringField, ReferenceField, CASCADE, Document
+from mongoengine import StringField, ReferenceField, Document
 
 
 class AutorModel(Document):
     nome = StringField(max_length=512)
-    meta = {
-        'collection': 'autor',
-        'indexes': [{
-            'fields': ['$nome'],
-            'weights': {'nome': 3}
-        }]
-    }
+    meta = {'collection': 'autor'}
 
 
 class NoticiaModel(Document):
     titulo = StringField(max_length=512, required=True)
     texto = StringField(required=True)
-    autor = ReferenceField(
-        AutorModel, reverse_delete_rule=CASCADE, required=True
-    )
-    meta = {
-        'collection': 'noticia',
-        'indexes': [{
-            'fields': ['$titulo', '$texto'],
-            # 'default_language': 'english',
-            'weights': {'titulo': 10, 'texto': 2}
-        }]
-    }
+    autor = ReferenceField(AutorModel, required=True)
+    meta = {'collection': 'noticia'}
 
     def to_dict(self) -> dict:
         return {

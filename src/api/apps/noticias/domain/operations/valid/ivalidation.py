@@ -2,7 +2,7 @@
 
 import re
 from src.api.errors.exceptions import (
-    StrNotShouldHasIntValues, FieldIsRequired
+    FieldNotShouldHasNumbers, FieldIsRequired
 )
 from abc import ABC, abstractmethod
 
@@ -13,14 +13,21 @@ class IValidation(ABC):
         if txt is not None:
             return bool(re.search(r'\d+', txt))
 
-    def _autor_nome_should_be_str(self, data: dict):
-        if self._str_has_number(data['autor']['nome']):
-            raise StrNotShouldHasIntValues('autor.nome')
+    def _field_should_be_str(self, name: str, val: str):
+        if self._str_has_number(val):
+            raise FieldNotShouldHasNumbers(name)
 
     def _field_is_required(self, data: dict, field_name: str):
-        oid = data.get(field_name, None)
-        if oid is None or oid == '':
+        val = data.get(field_name, None)
+        if val is None or val == '':
             raise FieldIsRequired(field_name)
+
+    def _validate_autor_nome(self, data: dict):
+        autor_dct = data.get('autor', None)
+        autor_nome = None
+        if isinstance(autor_dct, dict):
+            autor_nome = autor_dct.get('nome', None)
+        self._field_should_be_str('autor.nome', autor_nome)
 
     @abstractmethod
     def validate(self):

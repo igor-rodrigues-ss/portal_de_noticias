@@ -1,15 +1,7 @@
 version: '3.7'
 
-
-
-
-
-
-
 services:
   mongo:
-    env_file:
-      - ../config.env
     container_name: mongo
     image: mongo:4.4.2
     environment:
@@ -18,7 +10,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ${DB_DATA_PATH}:/data/db
+      - ${HOME}/portal_noticias_db_data:/data/db
     networks:
       - backend
   

@@ -49,3 +49,4 @@ cd portal_de_noticias/deploy
 ```sh
 docker logs -f api
 ```
+- Observação: Os dados da base de dados serão salvos no seguinte caminho: **${HOME}/portal_noticias_db_data**
